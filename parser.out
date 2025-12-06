@@ -1,0 +1,1618 @@
+Created by PLY version 3.11 (http://www.dabeaz.com/ply)
+
+Grammar
+
+Rule 0     S' -> program
+Rule 1     program -> PROGRAM ID SEMI decls compound_statement DOT
+Rule 2     decls -> VAR decl_list
+Rule 3     decls -> empty
+Rule 4     decl_list -> decl_list identifier_list COLON type SEMI
+Rule 5     decl_list -> identifier_list COLON type SEMI
+Rule 6     identifier_list -> ID
+Rule 7     identifier_list -> identifier_list COMMA ID
+Rule 8     type -> standard_type
+Rule 9     type -> array_type
+Rule 10    standard_type -> INTEGER
+Rule 11    standard_type -> FLOAT
+Rule 12    array_type -> ARRAY LBRACKET dim RBRACKET OF standard_type
+Rule 13    dim -> INTNUM DOTDOT INTNUM
+Rule 14    statement -> assignment
+Rule 15    statement -> if_statement
+Rule 16    statement -> while_statement
+Rule 17    statement -> io_statement
+Rule 18    statement -> compound_statement
+Rule 19    assignment -> variable ASSIGN expr
+Rule 20    if_statement -> IF expr THEN statement ELSE statement
+Rule 21    if_statement -> IF expr THEN statement
+Rule 22    while_statement -> WHILE expr DO statement
+Rule 23    io_statement -> READ LPAREN variable RPAREN
+Rule 24    io_statement -> WRITE LPAREN expr RPAREN
+Rule 25    io_statement -> WRITE LPAREN STRINGCONST RPAREN
+Rule 26    compound_statement -> BEGIN statement_list END
+Rule 27    statement_list -> statement
+Rule 28    statement_list -> statement_list SEMI statement
+Rule 29    expr -> expr logop relexpr
+Rule 30    expr -> relexpr
+Rule 31    logop -> OR
+Rule 32    logop -> AND
+Rule 33    relexpr -> relexpr relop addexpr
+Rule 34    relexpr -> addexpr
+Rule 35    relop -> RELOP
+Rule 36    addexpr -> addexpr addop mulexpr
+Rule 37    addexpr -> mulexpr
+Rule 38    addop -> PLUS
+Rule 39    addop -> MINUS
+Rule 40    mulexpr -> mulexpr mulop factor
+Rule 41    mulexpr -> factor
+Rule 42    mulop -> TIMES
+Rule 43    mulop -> DIVIDE
+Rule 44    factor -> variable
+Rule 45    factor -> constant
+Rule 46    factor -> NOT factor
+Rule 47    factor -> LPAREN expr RPAREN
+Rule 48    variable -> ID
+Rule 49    variable -> ID LBRACKET expr RBRACKET
+Rule 50    constant -> INTNUM
+Rule 51    constant -> FLOATNUM
+Rule 52    empty -> <empty>
+
+Terminals, with rules where they appear
+
+AND                  : 32
+ARRAY                : 12
+ASSIGN               : 19
+BEGIN                : 26
+COLON                : 4 5
+COMMA                : 7
+DIVIDE               : 43
+DO                   : 22
+DOT                  : 1
+DOTDOT               : 13
+ELSE                 : 20
+END                  : 26
+FLOAT                : 11
+FLOATNUM             : 51
+ID                   : 1 6 7 48 49
+IF                   : 20 21
+INTEGER              : 10
+INTNUM               : 13 13 50
+LBRACKET             : 12 49
+LPAREN               : 23 24 25 47
+MINUS                : 39
+NOT                  : 46
+OF                   : 12
+OR                   : 31
+PLUS                 : 38
+PROGRAM              : 1
+RBRACKET             : 12 49
+READ                 : 23
+RELOP                : 35
+RPAREN               : 23 24 25 47
+SEMI                 : 1 4 5 28
+STRINGCONST          : 25
+THEN                 : 20 21
+TIMES                : 42
+VAR                  : 2
+WHILE                : 22
+WRITE                : 24 25
+error                : 
+
+Nonterminals, with rules where they appear
+
+addexpr              : 33 34 36
+addop                : 36
+array_type           : 9
+assignment           : 14
+compound_statement   : 1 18
+constant             : 45
+decl_list            : 2 4
+decls                : 1
+dim                  : 12
+empty                : 3
+expr                 : 19 20 21 22 24 29 47 49
+factor               : 40 41 46
+identifier_list      : 4 5 7
+if_statement         : 15
+io_statement         : 17
+logop                : 29
+mulexpr              : 36 37 40
+mulop                : 40
+program              : 0
+relexpr              : 29 30 33
+relop                : 33
+standard_type        : 8 12
+statement            : 20 20 21 22 27 28
+statement_list       : 26 28
+type                 : 4 5
+variable             : 19 23 44
+while_statement      : 16
+
+Parsing method: LALR
+
+state 0
+
+    (0) S' -> . program
+    (1) program -> . PROGRAM ID SEMI decls compound_statement DOT
+
+    PROGRAM         shift and go to state 2
+
+    program                        shift and go to state 1
+
+state 1
+
+    (0) S' -> program .
+
+
+
+state 2
+
+    (1) program -> PROGRAM . ID SEMI decls compound_statement DOT
+
+    ID              shift and go to state 3
+
+
+state 3
+
+    (1) program -> PROGRAM ID . SEMI decls compound_statement DOT
+
+    SEMI            shift and go to state 4
+
+
+state 4
+
+    (1) program -> PROGRAM ID SEMI . decls compound_statement DOT
+    (2) decls -> . VAR decl_list
+    (3) decls -> . empty
+    (52) empty -> .
+
+    VAR             shift and go to state 6
+    BEGIN           reduce using rule 52 (empty -> .)
+
+    decls                          shift and go to state 5
+    empty                          shift and go to state 7
+
+state 5
+
+    (1) program -> PROGRAM ID SEMI decls . compound_statement DOT
+    (26) compound_statement -> . BEGIN statement_list END
+
+    BEGIN           shift and go to state 9
+
+    compound_statement             shift and go to state 8
+
+state 6
+
+    (2) decls -> VAR . decl_list
+    (4) decl_list -> . decl_list identifier_list COLON type SEMI
+    (5) decl_list -> . identifier_list COLON type SEMI
+    (6) identifier_list -> . ID
+    (7) identifier_list -> . identifier_list COMMA ID
+
+    ID              shift and go to state 12
+
+    decl_list                      shift and go to state 10
+    identifier_list                shift and go to state 11
+
+state 7
+
+    (3) decls -> empty .
+
+    BEGIN           reduce using rule 3 (decls -> empty .)
+
+
+state 8
+
+    (1) program -> PROGRAM ID SEMI decls compound_statement . DOT
+
+    DOT             shift and go to state 13
+
+
+state 9
+
+    (26) compound_statement -> BEGIN . statement_list END
+    (27) statement_list -> . statement
+    (28) statement_list -> . statement_list SEMI statement
+    (14) statement -> . assignment
+    (15) statement -> . if_statement
+    (16) statement -> . while_statement
+    (17) statement -> . io_statement
+    (18) statement -> . compound_statement
+    (19) assignment -> . variable ASSIGN expr
+    (20) if_statement -> . IF expr THEN statement ELSE statement
+    (21) if_statement -> . IF expr THEN statement
+    (22) while_statement -> . WHILE expr DO statement
+    (23) io_statement -> . READ LPAREN variable RPAREN
+    (24) io_statement -> . WRITE LPAREN expr RPAREN
+    (25) io_statement -> . WRITE LPAREN STRINGCONST RPAREN
+    (26) compound_statement -> . BEGIN statement_list END
+    (48) variable -> . ID
+    (49) variable -> . ID LBRACKET expr RBRACKET
+
+    IF              shift and go to state 22
+    WHILE           shift and go to state 23
+    READ            shift and go to state 24
+    WRITE           shift and go to state 25
+    BEGIN           shift and go to state 9
+    ID              shift and go to state 26
+
+    statement_list                 shift and go to state 14
+    statement                      shift and go to state 15
+    assignment                     shift and go to state 16
+    if_statement                   shift and go to state 17
+    while_statement                shift and go to state 18
+    io_statement                   shift and go to state 19
+    compound_statement             shift and go to state 20
+    variable                       shift and go to state 21
+
+state 10
+
+    (2) decls -> VAR decl_list .
+    (4) decl_list -> decl_list . identifier_list COLON type SEMI
+    (6) identifier_list -> . ID
+    (7) identifier_list -> . identifier_list COMMA ID
+
+    BEGIN           reduce using rule 2 (decls -> VAR decl_list .)
+    ID              shift and go to state 12
+
+    identifier_list                shift and go to state 27
+
+state 11
+
+    (5) decl_list -> identifier_list . COLON type SEMI
+    (7) identifier_list -> identifier_list . COMMA ID
+
+    COLON           shift and go to state 28
+    COMMA           shift and go to state 29
+
+
+state 12
+
+    (6) identifier_list -> ID .
+
+    COLON           reduce using rule 6 (identifier_list -> ID .)
+    COMMA           reduce using rule 6 (identifier_list -> ID .)
+
+
+state 13
+
+    (1) program -> PROGRAM ID SEMI decls compound_statement DOT .
+
+    $end            reduce using rule 1 (program -> PROGRAM ID SEMI decls compound_statement DOT .)
+
+
+state 14
+
+    (26) compound_statement -> BEGIN statement_list . END
+    (28) statement_list -> statement_list . SEMI statement
+
+    END             shift and go to state 30
+    SEMI            shift and go to state 31
+
+
+state 15
+
+    (27) statement_list -> statement .
+
+    END             reduce using rule 27 (statement_list -> statement .)
+    SEMI            reduce using rule 27 (statement_list -> statement .)
+
+
+state 16
+
+    (14) statement -> assignment .
+
+    END             reduce using rule 14 (statement -> assignment .)
+    SEMI            reduce using rule 14 (statement -> assignment .)
+    ELSE            reduce using rule 14 (statement -> assignment .)
+
+
+state 17
+
+    (15) statement -> if_statement .
+
+    END             reduce using rule 15 (statement -> if_statement .)
+    SEMI            reduce using rule 15 (statement -> if_statement .)
+    ELSE            reduce using rule 15 (statement -> if_statement .)
+
+
+state 18
+
+    (16) statement -> while_statement .
+
+    END             reduce using rule 16 (statement -> while_statement .)
+    SEMI            reduce using rule 16 (statement -> while_statement .)
+    ELSE            reduce using rule 16 (statement -> while_statement .)
+
+
+state 19
+
+    (17) statement -> io_statement .
+
+    END             reduce using rule 17 (statement -> io_statement .)
+    SEMI            reduce using rule 17 (statement -> io_statement .)
+    ELSE            reduce using rule 17 (statement -> io_statement .)
+
+
+state 20
+
+    (18) statement -> compound_statement .
+
+    END             reduce using rule 18 (statement -> compound_statement .)
+    SEMI            reduce using rule 18 (statement -> compound_statement .)
+    ELSE            reduce using rule 18 (statement -> compound_statement .)
+
+
+state 21
+
+    (19) assignment -> variable . ASSIGN expr
+
+    ASSIGN          shift and go to state 32
+
+
+state 22
+
+    (20) if_statement -> IF . expr THEN statement ELSE statement
+    (21) if_statement -> IF . expr THEN statement
+    (29) expr -> . expr logop relexpr
+    (30) expr -> . relexpr
+    (33) relexpr -> . relexpr relop addexpr
+    (34) relexpr -> . addexpr
+    (36) addexpr -> . addexpr addop mulexpr
+    (37) addexpr -> . mulexpr
+    (40) mulexpr -> . mulexpr mulop factor
+    (41) mulexpr -> . factor
+    (44) factor -> . variable
+    (45) factor -> . constant
+    (46) factor -> . NOT factor
+    (47) factor -> . LPAREN expr RPAREN
+    (48) variable -> . ID
+    (49) variable -> . ID LBRACKET expr RBRACKET
+    (50) constant -> . INTNUM
+    (51) constant -> . FLOATNUM
+
+    NOT             shift and go to state 40
+    LPAREN          shift and go to state 41
+    ID              shift and go to state 26
+    INTNUM          shift and go to state 42
+    FLOATNUM        shift and go to state 43
+
+    expr                           shift and go to state 33
+    relexpr                        shift and go to state 34
+    addexpr                        shift and go to state 35
+    mulexpr                        shift and go to state 36
+    factor                         shift and go to state 37
+    variable                       shift and go to state 38
+    constant                       shift and go to state 39
+
+state 23
+
+    (22) while_statement -> WHILE . expr DO statement
+    (29) expr -> . expr logop relexpr
+    (30) expr -> . relexpr
+    (33) relexpr -> . relexpr relop addexpr
+    (34) relexpr -> . addexpr
+    (36) addexpr -> . addexpr addop mulexpr
+    (37) addexpr -> . mulexpr
+    (40) mulexpr -> . mulexpr mulop factor
+    (41) mulexpr -> . factor
+    (44) factor -> . variable
+    (45) factor -> . constant
+    (46) factor -> . NOT factor
+    (47) factor -> . LPAREN expr RPAREN
+    (48) variable -> . ID
+    (49) variable -> . ID LBRACKET expr RBRACKET
+    (50) constant -> . INTNUM
+    (51) constant -> . FLOATNUM
+
+    NOT             shift and go to state 40
+    LPAREN          shift and go to state 41
+    ID              shift and go to state 26
+    INTNUM          shift and go to state 42
+    FLOATNUM        shift and go to state 43
+
+    expr                           shift and go to state 44
+    relexpr                        shift and go to state 34
+    addexpr                        shift and go to state 35
+    mulexpr                        shift and go to state 36
+    factor                         shift and go to state 37
+    variable                       shift and go to state 38
+    constant                       shift and go to state 39
+
+state 24
+
+    (23) io_statement -> READ . LPAREN variable RPAREN
+
+    LPAREN          shift and go to state 45
+
+
+state 25
+
+    (24) io_statement -> WRITE . LPAREN expr RPAREN
+    (25) io_statement -> WRITE . LPAREN STRINGCONST RPAREN
+
+    LPAREN          shift and go to state 46
+
+
+state 26
+
+    (48) variable -> ID .
+    (49) variable -> ID . LBRACKET expr RBRACKET
+
+    ASSIGN          reduce using rule 48 (variable -> ID .)
+    TIMES           reduce using rule 48 (variable -> ID .)
+    DIVIDE          reduce using rule 48 (variable -> ID .)
+    PLUS            reduce using rule 48 (variable -> ID .)
+    MINUS           reduce using rule 48 (variable -> ID .)
+    RELOP           reduce using rule 48 (variable -> ID .)
+    THEN            reduce using rule 48 (variable -> ID .)
+    OR              reduce using rule 48 (variable -> ID .)
+    AND             reduce using rule 48 (variable -> ID .)
+    DO              reduce using rule 48 (variable -> ID .)
+    END             reduce using rule 48 (variable -> ID .)
+    SEMI            reduce using rule 48 (variable -> ID .)
+    ELSE            reduce using rule 48 (variable -> ID .)
+    RPAREN          reduce using rule 48 (variable -> ID .)
+    RBRACKET        reduce using rule 48 (variable -> ID .)
+    LBRACKET        shift and go to state 47
+
+
+state 27
+
+    (4) decl_list -> decl_list identifier_list . COLON type SEMI
+    (7) identifier_list -> identifier_list . COMMA ID
+
+    COLON           shift and go to state 48
+    COMMA           shift and go to state 29
+
+
+state 28
+
+    (5) decl_list -> identifier_list COLON . type SEMI
+    (8) type -> . standard_type
+    (9) type -> . array_type
+    (10) standard_type -> . INTEGER
+    (11) standard_type -> . FLOAT
+    (12) array_type -> . ARRAY LBRACKET dim RBRACKET OF standard_type
+
+    INTEGER         shift and go to state 52
+    FLOAT           shift and go to state 53
+    ARRAY           shift and go to state 54
+
+    type                           shift and go to state 49
+    standard_type                  shift and go to state 50
+    array_type                     shift and go to state 51
+
+state 29
+
+    (7) identifier_list -> identifier_list COMMA . ID
+
+    ID              shift and go to state 55
+
+
+state 30
+
+    (26) compound_statement -> BEGIN statement_list END .
+
+    DOT             reduce using rule 26 (compound_statement -> BEGIN statement_list END .)
+    END             reduce using rule 26 (compound_statement -> BEGIN statement_list END .)
+    SEMI            reduce using rule 26 (compound_statement -> BEGIN statement_list END .)
+    ELSE            reduce using rule 26 (compound_statement -> BEGIN statement_list END .)
+
+
+state 31
+
+    (28) statement_list -> statement_list SEMI . statement
+    (14) statement -> . assignment
+    (15) statement -> . if_statement
+    (16) statement -> . while_statement
+    (17) statement -> . io_statement
+    (18) statement -> . compound_statement
+    (19) assignment -> . variable ASSIGN expr
+    (20) if_statement -> . IF expr THEN statement ELSE statement
+    (21) if_statement -> . IF expr THEN statement
+    (22) while_statement -> . WHILE expr DO statement
+    (23) io_statement -> . READ LPAREN variable RPAREN
+    (24) io_statement -> . WRITE LPAREN expr RPAREN
+    (25) io_statement -> . WRITE LPAREN STRINGCONST RPAREN
+    (26) compound_statement -> . BEGIN statement_list END
+    (48) variable -> . ID
+    (49) variable -> . ID LBRACKET expr RBRACKET
+
+    IF              shift and go to state 22
+    WHILE           shift and go to state 23
+    READ            shift and go to state 24
+    WRITE           shift and go to state 25
+    BEGIN           shift and go to state 9
+    ID              shift and go to state 26
+
+    statement                      shift and go to state 56
+    assignment                     shift and go to state 16
+    if_statement                   shift and go to state 17
+    while_statement                shift and go to state 18
+    io_statement                   shift and go to state 19
+    compound_statement             shift and go to state 20
+    variable                       shift and go to state 21
+
+state 32
+
+    (19) assignment -> variable ASSIGN . expr
+    (29) expr -> . expr logop relexpr
+    (30) expr -> . relexpr
+    (33) relexpr -> . relexpr relop addexpr
+    (34) relexpr -> . addexpr
+    (36) addexpr -> . addexpr addop mulexpr
+    (37) addexpr -> . mulexpr
+    (40) mulexpr -> . mulexpr mulop factor
+    (41) mulexpr -> . factor
+    (44) factor -> . variable
+    (45) factor -> . constant
+    (46) factor -> . NOT factor
+    (47) factor -> . LPAREN expr RPAREN
+    (48) variable -> . ID
+    (49) variable -> . ID LBRACKET expr RBRACKET
+    (50) constant -> . INTNUM
+    (51) constant -> . FLOATNUM
+
+    NOT             shift and go to state 40
+    LPAREN          shift and go to state 41
+    ID              shift and go to state 26
+    INTNUM          shift and go to state 42
+    FLOATNUM        shift and go to state 43
+
+    variable                       shift and go to state 38
+    expr                           shift and go to state 57
+    relexpr                        shift and go to state 34
+    addexpr                        shift and go to state 35
+    mulexpr                        shift and go to state 36
+    factor                         shift and go to state 37
+    constant                       shift and go to state 39
+
+state 33
+
+    (20) if_statement -> IF expr . THEN statement ELSE statement
+    (21) if_statement -> IF expr . THEN statement
+    (29) expr -> expr . logop relexpr
+    (31) logop -> . OR
+    (32) logop -> . AND
+
+    THEN            shift and go to state 58
+    OR              shift and go to state 60
+    AND             shift and go to state 61
+
+    logop                          shift and go to state 59
+
+state 34
+
+    (30) expr -> relexpr .
+    (33) relexpr -> relexpr . relop addexpr
+    (35) relop -> . RELOP
+
+    THEN            reduce using rule 30 (expr -> relexpr .)
+    OR              reduce using rule 30 (expr -> relexpr .)
+    AND             reduce using rule 30 (expr -> relexpr .)
+    DO              reduce using rule 30 (expr -> relexpr .)
+    END             reduce using rule 30 (expr -> relexpr .)
+    SEMI            reduce using rule 30 (expr -> relexpr .)
+    ELSE            reduce using rule 30 (expr -> relexpr .)
+    RPAREN          reduce using rule 30 (expr -> relexpr .)
+    RBRACKET        reduce using rule 30 (expr -> relexpr .)
+    RELOP           shift and go to state 63
+
+    relop                          shift and go to state 62
+
+state 35
+
+    (34) relexpr -> addexpr .
+    (36) addexpr -> addexpr . addop mulexpr
+    (38) addop -> . PLUS
+    (39) addop -> . MINUS
+
+    RELOP           reduce using rule 34 (relexpr -> addexpr .)
+    THEN            reduce using rule 34 (relexpr -> addexpr .)
+    OR              reduce using rule 34 (relexpr -> addexpr .)
+    AND             reduce using rule 34 (relexpr -> addexpr .)
+    DO              reduce using rule 34 (relexpr -> addexpr .)
+    END             reduce using rule 34 (relexpr -> addexpr .)
+    SEMI            reduce using rule 34 (relexpr -> addexpr .)
+    ELSE            reduce using rule 34 (relexpr -> addexpr .)
+    RPAREN          reduce using rule 34 (relexpr -> addexpr .)
+    RBRACKET        reduce using rule 34 (relexpr -> addexpr .)
+    PLUS            shift and go to state 65
+    MINUS           shift and go to state 66
+
+    addop                          shift and go to state 64
+
+state 36
+
+    (37) addexpr -> mulexpr .
+    (40) mulexpr -> mulexpr . mulop factor
+    (42) mulop -> . TIMES
+    (43) mulop -> . DIVIDE
+
+    PLUS            reduce using rule 37 (addexpr -> mulexpr .)
+    MINUS           reduce using rule 37 (addexpr -> mulexpr .)
+    RELOP           reduce using rule 37 (addexpr -> mulexpr .)
+    THEN            reduce using rule 37 (addexpr -> mulexpr .)
+    OR              reduce using rule 37 (addexpr -> mulexpr .)
+    AND             reduce using rule 37 (addexpr -> mulexpr .)
+    DO              reduce using rule 37 (addexpr -> mulexpr .)
+    END             reduce using rule 37 (addexpr -> mulexpr .)
+    SEMI            reduce using rule 37 (addexpr -> mulexpr .)
+    ELSE            reduce using rule 37 (addexpr -> mulexpr .)
+    RPAREN          reduce using rule 37 (addexpr -> mulexpr .)
+    RBRACKET        reduce using rule 37 (addexpr -> mulexpr .)
+    TIMES           shift and go to state 68
+    DIVIDE          shift and go to state 69
+
+    mulop                          shift and go to state 67
+
+state 37
+
+    (41) mulexpr -> factor .
+
+    TIMES           reduce using rule 41 (mulexpr -> factor .)
+    DIVIDE          reduce using rule 41 (mulexpr -> factor .)
+    PLUS            reduce using rule 41 (mulexpr -> factor .)
+    MINUS           reduce using rule 41 (mulexpr -> factor .)
+    RELOP           reduce using rule 41 (mulexpr -> factor .)
+    THEN            reduce using rule 41 (mulexpr -> factor .)
+    OR              reduce using rule 41 (mulexpr -> factor .)
+    AND             reduce using rule 41 (mulexpr -> factor .)
+    DO              reduce using rule 41 (mulexpr -> factor .)
+    END             reduce using rule 41 (mulexpr -> factor .)
+    SEMI            reduce using rule 41 (mulexpr -> factor .)
+    ELSE            reduce using rule 41 (mulexpr -> factor .)
+    RPAREN          reduce using rule 41 (mulexpr -> factor .)
+    RBRACKET        reduce using rule 41 (mulexpr -> factor .)
+
+
+state 38
+
+    (44) factor -> variable .
+
+    TIMES           reduce using rule 44 (factor -> variable .)
+    DIVIDE          reduce using rule 44 (factor -> variable .)
+    PLUS            reduce using rule 44 (factor -> variable .)
+    MINUS           reduce using rule 44 (factor -> variable .)
+    RELOP           reduce using rule 44 (factor -> variable .)
+    THEN            reduce using rule 44 (factor -> variable .)
+    OR              reduce using rule 44 (factor -> variable .)
+    AND             reduce using rule 44 (factor -> variable .)
+    DO              reduce using rule 44 (factor -> variable .)
+    END             reduce using rule 44 (factor -> variable .)
+    SEMI            reduce using rule 44 (factor -> variable .)
+    ELSE            reduce using rule 44 (factor -> variable .)
+    RPAREN          reduce using rule 44 (factor -> variable .)
+    RBRACKET        reduce using rule 44 (factor -> variable .)
+
+
+state 39
+
+    (45) factor -> constant .
+
+    TIMES           reduce using rule 45 (factor -> constant .)
+    DIVIDE          reduce using rule 45 (factor -> constant .)
+    PLUS            reduce using rule 45 (factor -> constant .)
+    MINUS           reduce using rule 45 (factor -> constant .)
+    RELOP           reduce using rule 45 (factor -> constant .)
+    THEN            reduce using rule 45 (factor -> constant .)
+    OR              reduce using rule 45 (factor -> constant .)
+    AND             reduce using rule 45 (factor -> constant .)
+    DO              reduce using rule 45 (factor -> constant .)
+    END             reduce using rule 45 (factor -> constant .)
+    SEMI            reduce using rule 45 (factor -> constant .)
+    ELSE            reduce using rule 45 (factor -> constant .)
+    RPAREN          reduce using rule 45 (factor -> constant .)
+    RBRACKET        reduce using rule 45 (factor -> constant .)
+
+
+state 40
+
+    (46) factor -> NOT . factor
+    (44) factor -> . variable
+    (45) factor -> . constant
+    (46) factor -> . NOT factor
+    (47) factor -> . LPAREN expr RPAREN
+    (48) variable -> . ID
+    (49) variable -> . ID LBRACKET expr RBRACKET
+    (50) constant -> . INTNUM
+    (51) constant -> . FLOATNUM
+
+    NOT             shift and go to state 40
+    LPAREN          shift and go to state 41
+    ID              shift and go to state 26
+    INTNUM          shift and go to state 42
+    FLOATNUM        shift and go to state 43
+
+    factor                         shift and go to state 70
+    variable                       shift and go to state 38
+    constant                       shift and go to state 39
+
+state 41
+
+    (47) factor -> LPAREN . expr RPAREN
+    (29) expr -> . expr logop relexpr
+    (30) expr -> . relexpr
+    (33) relexpr -> . relexpr relop addexpr
+    (34) relexpr -> . addexpr
+    (36) addexpr -> . addexpr addop mulexpr
+    (37) addexpr -> . mulexpr
+    (40) mulexpr -> . mulexpr mulop factor
+    (41) mulexpr -> . factor
+    (44) factor -> . variable
+    (45) factor -> . constant
+    (46) factor -> . NOT factor
+    (47) factor -> . LPAREN expr RPAREN
+    (48) variable -> . ID
+    (49) variable -> . ID LBRACKET expr RBRACKET
+    (50) constant -> . INTNUM
+    (51) constant -> . FLOATNUM
+
+    NOT             shift and go to state 40
+    LPAREN          shift and go to state 41
+    ID              shift and go to state 26
+    INTNUM          shift and go to state 42
+    FLOATNUM        shift and go to state 43
+
+    expr                           shift and go to state 71
+    relexpr                        shift and go to state 34
+    addexpr                        shift and go to state 35
+    mulexpr                        shift and go to state 36
+    factor                         shift and go to state 37
+    variable                       shift and go to state 38
+    constant                       shift and go to state 39
+
+state 42
+
+    (50) constant -> INTNUM .
+
+    TIMES           reduce using rule 50 (constant -> INTNUM .)
+    DIVIDE          reduce using rule 50 (constant -> INTNUM .)
+    PLUS            reduce using rule 50 (constant -> INTNUM .)
+    MINUS           reduce using rule 50 (constant -> INTNUM .)
+    RELOP           reduce using rule 50 (constant -> INTNUM .)
+    THEN            reduce using rule 50 (constant -> INTNUM .)
+    OR              reduce using rule 50 (constant -> INTNUM .)
+    AND             reduce using rule 50 (constant -> INTNUM .)
+    DO              reduce using rule 50 (constant -> INTNUM .)
+    END             reduce using rule 50 (constant -> INTNUM .)
+    SEMI            reduce using rule 50 (constant -> INTNUM .)
+    ELSE            reduce using rule 50 (constant -> INTNUM .)
+    RPAREN          reduce using rule 50 (constant -> INTNUM .)
+    RBRACKET        reduce using rule 50 (constant -> INTNUM .)
+
+
+state 43
+
+    (51) constant -> FLOATNUM .
+
+    TIMES           reduce using rule 51 (constant -> FLOATNUM .)
+    DIVIDE          reduce using rule 51 (constant -> FLOATNUM .)
+    PLUS            reduce using rule 51 (constant -> FLOATNUM .)
+    MINUS           reduce using rule 51 (constant -> FLOATNUM .)
+    RELOP           reduce using rule 51 (constant -> FLOATNUM .)
+    THEN            reduce using rule 51 (constant -> FLOATNUM .)
+    OR              reduce using rule 51 (constant -> FLOATNUM .)
+    AND             reduce using rule 51 (constant -> FLOATNUM .)
+    DO              reduce using rule 51 (constant -> FLOATNUM .)
+    END             reduce using rule 51 (constant -> FLOATNUM .)
+    SEMI            reduce using rule 51 (constant -> FLOATNUM .)
+    ELSE            reduce using rule 51 (constant -> FLOATNUM .)
+    RPAREN          reduce using rule 51 (constant -> FLOATNUM .)
+    RBRACKET        reduce using rule 51 (constant -> FLOATNUM .)
+
+
+state 44
+
+    (22) while_statement -> WHILE expr . DO statement
+    (29) expr -> expr . logop relexpr
+    (31) logop -> . OR
+    (32) logop -> . AND
+
+    DO              shift and go to state 72
+    OR              shift and go to state 60
+    AND             shift and go to state 61
+
+    logop                          shift and go to state 59
+
+state 45
+
+    (23) io_statement -> READ LPAREN . variable RPAREN
+    (48) variable -> . ID
+    (49) variable -> . ID LBRACKET expr RBRACKET
+
+    ID              shift and go to state 26
+
+    variable                       shift and go to state 73
+
+state 46
+
+    (24) io_statement -> WRITE LPAREN . expr RPAREN
+    (25) io_statement -> WRITE LPAREN . STRINGCONST RPAREN
+    (29) expr -> . expr logop relexpr
+    (30) expr -> . relexpr
+    (33) relexpr -> . relexpr relop addexpr
+    (34) relexpr -> . addexpr
+    (36) addexpr -> . addexpr addop mulexpr
+    (37) addexpr -> . mulexpr
+    (40) mulexpr -> . mulexpr mulop factor
+    (41) mulexpr -> . factor
+    (44) factor -> . variable
+    (45) factor -> . constant
+    (46) factor -> . NOT factor
+    (47) factor -> . LPAREN expr RPAREN
+    (48) variable -> . ID
+    (49) variable -> . ID LBRACKET expr RBRACKET
+    (50) constant -> . INTNUM
+    (51) constant -> . FLOATNUM
+
+    STRINGCONST     shift and go to state 75
+    NOT             shift and go to state 40
+    LPAREN          shift and go to state 41
+    ID              shift and go to state 26
+    INTNUM          shift and go to state 42
+    FLOATNUM        shift and go to state 43
+
+    expr                           shift and go to state 74
+    relexpr                        shift and go to state 34
+    addexpr                        shift and go to state 35
+    mulexpr                        shift and go to state 36
+    factor                         shift and go to state 37
+    variable                       shift and go to state 38
+    constant                       shift and go to state 39
+
+state 47
+
+    (49) variable -> ID LBRACKET . expr RBRACKET
+    (29) expr -> . expr logop relexpr
+    (30) expr -> . relexpr
+    (33) relexpr -> . relexpr relop addexpr
+    (34) relexpr -> . addexpr
+    (36) addexpr -> . addexpr addop mulexpr
+    (37) addexpr -> . mulexpr
+    (40) mulexpr -> . mulexpr mulop factor
+    (41) mulexpr -> . factor
+    (44) factor -> . variable
+    (45) factor -> . constant
+    (46) factor -> . NOT factor
+    (47) factor -> . LPAREN expr RPAREN
+    (48) variable -> . ID
+    (49) variable -> . ID LBRACKET expr RBRACKET
+    (50) constant -> . INTNUM
+    (51) constant -> . FLOATNUM
+
+    NOT             shift and go to state 40
+    LPAREN          shift and go to state 41
+    ID              shift and go to state 26
+    INTNUM          shift and go to state 42
+    FLOATNUM        shift and go to state 43
+
+    expr                           shift and go to state 76
+    relexpr                        shift and go to state 34
+    addexpr                        shift and go to state 35
+    mulexpr                        shift and go to state 36
+    factor                         shift and go to state 37
+    variable                       shift and go to state 38
+    constant                       shift and go to state 39
+
+state 48
+
+    (4) decl_list -> decl_list identifier_list COLON . type SEMI
+    (8) type -> . standard_type
+    (9) type -> . array_type
+    (10) standard_type -> . INTEGER
+    (11) standard_type -> . FLOAT
+    (12) array_type -> . ARRAY LBRACKET dim RBRACKET OF standard_type
+
+    INTEGER         shift and go to state 52
+    FLOAT           shift and go to state 53
+    ARRAY           shift and go to state 54
+
+    type                           shift and go to state 77
+    standard_type                  shift and go to state 50
+    array_type                     shift and go to state 51
+
+state 49
+
+    (5) decl_list -> identifier_list COLON type . SEMI
+
+    SEMI            shift and go to state 78
+
+
+state 50
+
+    (8) type -> standard_type .
+
+    SEMI            reduce using rule 8 (type -> standard_type .)
+
+
+state 51
+
+    (9) type -> array_type .
+
+    SEMI            reduce using rule 9 (type -> array_type .)
+
+
+state 52
+
+    (10) standard_type -> INTEGER .
+
+    SEMI            reduce using rule 10 (standard_type -> INTEGER .)
+
+
+state 53
+
+    (11) standard_type -> FLOAT .
+
+    SEMI            reduce using rule 11 (standard_type -> FLOAT .)
+
+
+state 54
+
+    (12) array_type -> ARRAY . LBRACKET dim RBRACKET OF standard_type
+
+    LBRACKET        shift and go to state 79
+
+
+state 55
+
+    (7) identifier_list -> identifier_list COMMA ID .
+
+    COLON           reduce using rule 7 (identifier_list -> identifier_list COMMA ID .)
+    COMMA           reduce using rule 7 (identifier_list -> identifier_list COMMA ID .)
+
+
+state 56
+
+    (28) statement_list -> statement_list SEMI statement .
+
+    END             reduce using rule 28 (statement_list -> statement_list SEMI statement .)
+    SEMI            reduce using rule 28 (statement_list -> statement_list SEMI statement .)
+
+
+state 57
+
+    (19) assignment -> variable ASSIGN expr .
+    (29) expr -> expr . logop relexpr
+    (31) logop -> . OR
+    (32) logop -> . AND
+
+    END             reduce using rule 19 (assignment -> variable ASSIGN expr .)
+    SEMI            reduce using rule 19 (assignment -> variable ASSIGN expr .)
+    ELSE            reduce using rule 19 (assignment -> variable ASSIGN expr .)
+    OR              shift and go to state 60
+    AND             shift and go to state 61
+
+    logop                          shift and go to state 59
+
+state 58
+
+    (20) if_statement -> IF expr THEN . statement ELSE statement
+    (21) if_statement -> IF expr THEN . statement
+    (14) statement -> . assignment
+    (15) statement -> . if_statement
+    (16) statement -> . while_statement
+    (17) statement -> . io_statement
+    (18) statement -> . compound_statement
+    (19) assignment -> . variable ASSIGN expr
+    (20) if_statement -> . IF expr THEN statement ELSE statement
+    (21) if_statement -> . IF expr THEN statement
+    (22) while_statement -> . WHILE expr DO statement
+    (23) io_statement -> . READ LPAREN variable RPAREN
+    (24) io_statement -> . WRITE LPAREN expr RPAREN
+    (25) io_statement -> . WRITE LPAREN STRINGCONST RPAREN
+    (26) compound_statement -> . BEGIN statement_list END
+    (48) variable -> . ID
+    (49) variable -> . ID LBRACKET expr RBRACKET
+
+    IF              shift and go to state 22
+    WHILE           shift and go to state 23
+    READ            shift and go to state 24
+    WRITE           shift and go to state 25
+    BEGIN           shift and go to state 9
+    ID              shift and go to state 26
+
+    statement                      shift and go to state 80
+    assignment                     shift and go to state 16
+    if_statement                   shift and go to state 17
+    while_statement                shift and go to state 18
+    io_statement                   shift and go to state 19
+    compound_statement             shift and go to state 20
+    variable                       shift and go to state 21
+
+state 59
+
+    (29) expr -> expr logop . relexpr
+    (33) relexpr -> . relexpr relop addexpr
+    (34) relexpr -> . addexpr
+    (36) addexpr -> . addexpr addop mulexpr
+    (37) addexpr -> . mulexpr
+    (40) mulexpr -> . mulexpr mulop factor
+    (41) mulexpr -> . factor
+    (44) factor -> . variable
+    (45) factor -> . constant
+    (46) factor -> . NOT factor
+    (47) factor -> . LPAREN expr RPAREN
+    (48) variable -> . ID
+    (49) variable -> . ID LBRACKET expr RBRACKET
+    (50) constant -> . INTNUM
+    (51) constant -> . FLOATNUM
+
+    NOT             shift and go to state 40
+    LPAREN          shift and go to state 41
+    ID              shift and go to state 26
+    INTNUM          shift and go to state 42
+    FLOATNUM        shift and go to state 43
+
+    relexpr                        shift and go to state 81
+    addexpr                        shift and go to state 35
+    mulexpr                        shift and go to state 36
+    factor                         shift and go to state 37
+    variable                       shift and go to state 38
+    constant                       shift and go to state 39
+
+state 60
+
+    (31) logop -> OR .
+
+    NOT             reduce using rule 31 (logop -> OR .)
+    LPAREN          reduce using rule 31 (logop -> OR .)
+    ID              reduce using rule 31 (logop -> OR .)
+    INTNUM          reduce using rule 31 (logop -> OR .)
+    FLOATNUM        reduce using rule 31 (logop -> OR .)
+
+
+state 61
+
+    (32) logop -> AND .
+
+    NOT             reduce using rule 32 (logop -> AND .)
+    LPAREN          reduce using rule 32 (logop -> AND .)
+    ID              reduce using rule 32 (logop -> AND .)
+    INTNUM          reduce using rule 32 (logop -> AND .)
+    FLOATNUM        reduce using rule 32 (logop -> AND .)
+
+
+state 62
+
+    (33) relexpr -> relexpr relop . addexpr
+    (36) addexpr -> . addexpr addop mulexpr
+    (37) addexpr -> . mulexpr
+    (40) mulexpr -> . mulexpr mulop factor
+    (41) mulexpr -> . factor
+    (44) factor -> . variable
+    (45) factor -> . constant
+    (46) factor -> . NOT factor
+    (47) factor -> . LPAREN expr RPAREN
+    (48) variable -> . ID
+    (49) variable -> . ID LBRACKET expr RBRACKET
+    (50) constant -> . INTNUM
+    (51) constant -> . FLOATNUM
+
+    NOT             shift and go to state 40
+    LPAREN          shift and go to state 41
+    ID              shift and go to state 26
+    INTNUM          shift and go to state 42
+    FLOATNUM        shift and go to state 43
+
+    addexpr                        shift and go to state 82
+    mulexpr                        shift and go to state 36
+    factor                         shift and go to state 37
+    variable                       shift and go to state 38
+    constant                       shift and go to state 39
+
+state 63
+
+    (35) relop -> RELOP .
+
+    NOT             reduce using rule 35 (relop -> RELOP .)
+    LPAREN          reduce using rule 35 (relop -> RELOP .)
+    ID              reduce using rule 35 (relop -> RELOP .)
+    INTNUM          reduce using rule 35 (relop -> RELOP .)
+    FLOATNUM        reduce using rule 35 (relop -> RELOP .)
+
+
+state 64
+
+    (36) addexpr -> addexpr addop . mulexpr
+    (40) mulexpr -> . mulexpr mulop factor
+    (41) mulexpr -> . factor
+    (44) factor -> . variable
+    (45) factor -> . constant
+    (46) factor -> . NOT factor
+    (47) factor -> . LPAREN expr RPAREN
+    (48) variable -> . ID
+    (49) variable -> . ID LBRACKET expr RBRACKET
+    (50) constant -> . INTNUM
+    (51) constant -> . FLOATNUM
+
+    NOT             shift and go to state 40
+    LPAREN          shift and go to state 41
+    ID              shift and go to state 26
+    INTNUM          shift and go to state 42
+    FLOATNUM        shift and go to state 43
+
+    mulexpr                        shift and go to state 83
+    factor                         shift and go to state 37
+    variable                       shift and go to state 38
+    constant                       shift and go to state 39
+
+state 65
+
+    (38) addop -> PLUS .
+
+    NOT             reduce using rule 38 (addop -> PLUS .)
+    LPAREN          reduce using rule 38 (addop -> PLUS .)
+    ID              reduce using rule 38 (addop -> PLUS .)
+    INTNUM          reduce using rule 38 (addop -> PLUS .)
+    FLOATNUM        reduce using rule 38 (addop -> PLUS .)
+
+
+state 66
+
+    (39) addop -> MINUS .
+
+    NOT             reduce using rule 39 (addop -> MINUS .)
+    LPAREN          reduce using rule 39 (addop -> MINUS .)
+    ID              reduce using rule 39 (addop -> MINUS .)
+    INTNUM          reduce using rule 39 (addop -> MINUS .)
+    FLOATNUM        reduce using rule 39 (addop -> MINUS .)
+
+
+state 67
+
+    (40) mulexpr -> mulexpr mulop . factor
+    (44) factor -> . variable
+    (45) factor -> . constant
+    (46) factor -> . NOT factor
+    (47) factor -> . LPAREN expr RPAREN
+    (48) variable -> . ID
+    (49) variable -> . ID LBRACKET expr RBRACKET
+    (50) constant -> . INTNUM
+    (51) constant -> . FLOATNUM
+
+    NOT             shift and go to state 40
+    LPAREN          shift and go to state 41
+    ID              shift and go to state 26
+    INTNUM          shift and go to state 42
+    FLOATNUM        shift and go to state 43
+
+    factor                         shift and go to state 84
+    variable                       shift and go to state 38
+    constant                       shift and go to state 39
+
+state 68
+
+    (42) mulop -> TIMES .
+
+    NOT             reduce using rule 42 (mulop -> TIMES .)
+    LPAREN          reduce using rule 42 (mulop -> TIMES .)
+    ID              reduce using rule 42 (mulop -> TIMES .)
+    INTNUM          reduce using rule 42 (mulop -> TIMES .)
+    FLOATNUM        reduce using rule 42 (mulop -> TIMES .)
+
+
+state 69
+
+    (43) mulop -> DIVIDE .
+
+    NOT             reduce using rule 43 (mulop -> DIVIDE .)
+    LPAREN          reduce using rule 43 (mulop -> DIVIDE .)
+    ID              reduce using rule 43 (mulop -> DIVIDE .)
+    INTNUM          reduce using rule 43 (mulop -> DIVIDE .)
+    FLOATNUM        reduce using rule 43 (mulop -> DIVIDE .)
+
+
+state 70
+
+    (46) factor -> NOT factor .
+
+    TIMES           reduce using rule 46 (factor -> NOT factor .)
+    DIVIDE          reduce using rule 46 (factor -> NOT factor .)
+    PLUS            reduce using rule 46 (factor -> NOT factor .)
+    MINUS           reduce using rule 46 (factor -> NOT factor .)
+    RELOP           reduce using rule 46 (factor -> NOT factor .)
+    THEN            reduce using rule 46 (factor -> NOT factor .)
+    OR              reduce using rule 46 (factor -> NOT factor .)
+    AND             reduce using rule 46 (factor -> NOT factor .)
+    DO              reduce using rule 46 (factor -> NOT factor .)
+    END             reduce using rule 46 (factor -> NOT factor .)
+    SEMI            reduce using rule 46 (factor -> NOT factor .)
+    ELSE            reduce using rule 46 (factor -> NOT factor .)
+    RPAREN          reduce using rule 46 (factor -> NOT factor .)
+    RBRACKET        reduce using rule 46 (factor -> NOT factor .)
+
+
+state 71
+
+    (47) factor -> LPAREN expr . RPAREN
+    (29) expr -> expr . logop relexpr
+    (31) logop -> . OR
+    (32) logop -> . AND
+
+    RPAREN          shift and go to state 85
+    OR              shift and go to state 60
+    AND             shift and go to state 61
+
+    logop                          shift and go to state 59
+
+state 72
+
+    (22) while_statement -> WHILE expr DO . statement
+    (14) statement -> . assignment
+    (15) statement -> . if_statement
+    (16) statement -> . while_statement
+    (17) statement -> . io_statement
+    (18) statement -> . compound_statement
+    (19) assignment -> . variable ASSIGN expr
+    (20) if_statement -> . IF expr THEN statement ELSE statement
+    (21) if_statement -> . IF expr THEN statement
+    (22) while_statement -> . WHILE expr DO statement
+    (23) io_statement -> . READ LPAREN variable RPAREN
+    (24) io_statement -> . WRITE LPAREN expr RPAREN
+    (25) io_statement -> . WRITE LPAREN STRINGCONST RPAREN
+    (26) compound_statement -> . BEGIN statement_list END
+    (48) variable -> . ID
+    (49) variable -> . ID LBRACKET expr RBRACKET
+
+    IF              shift and go to state 22
+    WHILE           shift and go to state 23
+    READ            shift and go to state 24
+    WRITE           shift and go to state 25
+    BEGIN           shift and go to state 9
+    ID              shift and go to state 26
+
+    statement                      shift and go to state 86
+    assignment                     shift and go to state 16
+    if_statement                   shift and go to state 17
+    while_statement                shift and go to state 18
+    io_statement                   shift and go to state 19
+    compound_statement             shift and go to state 20
+    variable                       shift and go to state 21
+
+state 73
+
+    (23) io_statement -> READ LPAREN variable . RPAREN
+
+    RPAREN          shift and go to state 87
+
+
+state 74
+
+    (24) io_statement -> WRITE LPAREN expr . RPAREN
+    (29) expr -> expr . logop relexpr
+    (31) logop -> . OR
+    (32) logop -> . AND
+
+    RPAREN          shift and go to state 88
+    OR              shift and go to state 60
+    AND             shift and go to state 61
+
+    logop                          shift and go to state 59
+
+state 75
+
+    (25) io_statement -> WRITE LPAREN STRINGCONST . RPAREN
+
+    RPAREN          shift and go to state 89
+
+
+state 76
+
+    (49) variable -> ID LBRACKET expr . RBRACKET
+    (29) expr -> expr . logop relexpr
+    (31) logop -> . OR
+    (32) logop -> . AND
+
+    RBRACKET        shift and go to state 90
+    OR              shift and go to state 60
+    AND             shift and go to state 61
+
+    logop                          shift and go to state 59
+
+state 77
+
+    (4) decl_list -> decl_list identifier_list COLON type . SEMI
+
+    SEMI            shift and go to state 91
+
+
+state 78
+
+    (5) decl_list -> identifier_list COLON type SEMI .
+
+    ID              reduce using rule 5 (decl_list -> identifier_list COLON type SEMI .)
+    BEGIN           reduce using rule 5 (decl_list -> identifier_list COLON type SEMI .)
+
+
+state 79
+
+    (12) array_type -> ARRAY LBRACKET . dim RBRACKET OF standard_type
+    (13) dim -> . INTNUM DOTDOT INTNUM
+
+    INTNUM          shift and go to state 93
+
+    dim                            shift and go to state 92
+
+state 80
+
+    (20) if_statement -> IF expr THEN statement . ELSE statement
+    (21) if_statement -> IF expr THEN statement .
+
+  ! shift/reduce conflict for ELSE resolved as shift
+    ELSE            shift and go to state 94
+    END             reduce using rule 21 (if_statement -> IF expr THEN statement .)
+    SEMI            reduce using rule 21 (if_statement -> IF expr THEN statement .)
+
+  ! ELSE            [ reduce using rule 21 (if_statement -> IF expr THEN statement .) ]
+
+
+state 81
+
+    (29) expr -> expr logop relexpr .
+    (33) relexpr -> relexpr . relop addexpr
+    (35) relop -> . RELOP
+
+    THEN            reduce using rule 29 (expr -> expr logop relexpr .)
+    OR              reduce using rule 29 (expr -> expr logop relexpr .)
+    AND             reduce using rule 29 (expr -> expr logop relexpr .)
+    DO              reduce using rule 29 (expr -> expr logop relexpr .)
+    END             reduce using rule 29 (expr -> expr logop relexpr .)
+    SEMI            reduce using rule 29 (expr -> expr logop relexpr .)
+    ELSE            reduce using rule 29 (expr -> expr logop relexpr .)
+    RPAREN          reduce using rule 29 (expr -> expr logop relexpr .)
+    RBRACKET        reduce using rule 29 (expr -> expr logop relexpr .)
+    RELOP           shift and go to state 63
+
+    relop                          shift and go to state 62
+
+state 82
+
+    (33) relexpr -> relexpr relop addexpr .
+    (36) addexpr -> addexpr . addop mulexpr
+    (38) addop -> . PLUS
+    (39) addop -> . MINUS
+
+    RELOP           reduce using rule 33 (relexpr -> relexpr relop addexpr .)
+    THEN            reduce using rule 33 (relexpr -> relexpr relop addexpr .)
+    OR              reduce using rule 33 (relexpr -> relexpr relop addexpr .)
+    AND             reduce using rule 33 (relexpr -> relexpr relop addexpr .)
+    DO              reduce using rule 33 (relexpr -> relexpr relop addexpr .)
+    END             reduce using rule 33 (relexpr -> relexpr relop addexpr .)
+    SEMI            reduce using rule 33 (relexpr -> relexpr relop addexpr .)
+    ELSE            reduce using rule 33 (relexpr -> relexpr relop addexpr .)
+    RPAREN          reduce using rule 33 (relexpr -> relexpr relop addexpr .)
+    RBRACKET        reduce using rule 33 (relexpr -> relexpr relop addexpr .)
+    PLUS            shift and go to state 65
+    MINUS           shift and go to state 66
+
+    addop                          shift and go to state 64
+
+state 83
+
+    (36) addexpr -> addexpr addop mulexpr .
+    (40) mulexpr -> mulexpr . mulop factor
+    (42) mulop -> . TIMES
+    (43) mulop -> . DIVIDE
+
+    PLUS            reduce using rule 36 (addexpr -> addexpr addop mulexpr .)
+    MINUS           reduce using rule 36 (addexpr -> addexpr addop mulexpr .)
+    RELOP           reduce using rule 36 (addexpr -> addexpr addop mulexpr .)
+    THEN            reduce using rule 36 (addexpr -> addexpr addop mulexpr .)
+    OR              reduce using rule 36 (addexpr -> addexpr addop mulexpr .)
+    AND             reduce using rule 36 (addexpr -> addexpr addop mulexpr .)
+    DO              reduce using rule 36 (addexpr -> addexpr addop mulexpr .)
+    END             reduce using rule 36 (addexpr -> addexpr addop mulexpr .)
+    SEMI            reduce using rule 36 (addexpr -> addexpr addop mulexpr .)
+    ELSE            reduce using rule 36 (addexpr -> addexpr addop mulexpr .)
+    RPAREN          reduce using rule 36 (addexpr -> addexpr addop mulexpr .)
+    RBRACKET        reduce using rule 36 (addexpr -> addexpr addop mulexpr .)
+    TIMES           shift and go to state 68
+    DIVIDE          shift and go to state 69
+
+    mulop                          shift and go to state 67
+
+state 84
+
+    (40) mulexpr -> mulexpr mulop factor .
+
+    TIMES           reduce using rule 40 (mulexpr -> mulexpr mulop factor .)
+    DIVIDE          reduce using rule 40 (mulexpr -> mulexpr mulop factor .)
+    PLUS            reduce using rule 40 (mulexpr -> mulexpr mulop factor .)
+    MINUS           reduce using rule 40 (mulexpr -> mulexpr mulop factor .)
+    RELOP           reduce using rule 40 (mulexpr -> mulexpr mulop factor .)
+    THEN            reduce using rule 40 (mulexpr -> mulexpr mulop factor .)
+    OR              reduce using rule 40 (mulexpr -> mulexpr mulop factor .)
+    AND             reduce using rule 40 (mulexpr -> mulexpr mulop factor .)
+    DO              reduce using rule 40 (mulexpr -> mulexpr mulop factor .)
+    END             reduce using rule 40 (mulexpr -> mulexpr mulop factor .)
+    SEMI            reduce using rule 40 (mulexpr -> mulexpr mulop factor .)
+    ELSE            reduce using rule 40 (mulexpr -> mulexpr mulop factor .)
+    RPAREN          reduce using rule 40 (mulexpr -> mulexpr mulop factor .)
+    RBRACKET        reduce using rule 40 (mulexpr -> mulexpr mulop factor .)
+
+
+state 85
+
+    (47) factor -> LPAREN expr RPAREN .
+
+    TIMES           reduce using rule 47 (factor -> LPAREN expr RPAREN .)
+    DIVIDE          reduce using rule 47 (factor -> LPAREN expr RPAREN .)
+    PLUS            reduce using rule 47 (factor -> LPAREN expr RPAREN .)
+    MINUS           reduce using rule 47 (factor -> LPAREN expr RPAREN .)
+    RELOP           reduce using rule 47 (factor -> LPAREN expr RPAREN .)
+    THEN            reduce using rule 47 (factor -> LPAREN expr RPAREN .)
+    OR              reduce using rule 47 (factor -> LPAREN expr RPAREN .)
+    AND             reduce using rule 47 (factor -> LPAREN expr RPAREN .)
+    DO              reduce using rule 47 (factor -> LPAREN expr RPAREN .)
+    END             reduce using rule 47 (factor -> LPAREN expr RPAREN .)
+    SEMI            reduce using rule 47 (factor -> LPAREN expr RPAREN .)
+    ELSE            reduce using rule 47 (factor -> LPAREN expr RPAREN .)
+    RPAREN          reduce using rule 47 (factor -> LPAREN expr RPAREN .)
+    RBRACKET        reduce using rule 47 (factor -> LPAREN expr RPAREN .)
+
+
+state 86
+
+    (22) while_statement -> WHILE expr DO statement .
+
+    END             reduce using rule 22 (while_statement -> WHILE expr DO statement .)
+    SEMI            reduce using rule 22 (while_statement -> WHILE expr DO statement .)
+    ELSE            reduce using rule 22 (while_statement -> WHILE expr DO statement .)
+
+
+state 87
+
+    (23) io_statement -> READ LPAREN variable RPAREN .
+
+    END             reduce using rule 23 (io_statement -> READ LPAREN variable RPAREN .)
+    SEMI            reduce using rule 23 (io_statement -> READ LPAREN variable RPAREN .)
+    ELSE            reduce using rule 23 (io_statement -> READ LPAREN variable RPAREN .)
+
+
+state 88
+
+    (24) io_statement -> WRITE LPAREN expr RPAREN .
+
+    END             reduce using rule 24 (io_statement -> WRITE LPAREN expr RPAREN .)
+    SEMI            reduce using rule 24 (io_statement -> WRITE LPAREN expr RPAREN .)
+    ELSE            reduce using rule 24 (io_statement -> WRITE LPAREN expr RPAREN .)
+
+
+state 89
+
+    (25) io_statement -> WRITE LPAREN STRINGCONST RPAREN .
+
+    END             reduce using rule 25 (io_statement -> WRITE LPAREN STRINGCONST RPAREN .)
+    SEMI            reduce using rule 25 (io_statement -> WRITE LPAREN STRINGCONST RPAREN .)
+    ELSE            reduce using rule 25 (io_statement -> WRITE LPAREN STRINGCONST RPAREN .)
+
+
+state 90
+
+    (49) variable -> ID LBRACKET expr RBRACKET .
+
+    ASSIGN          reduce using rule 49 (variable -> ID LBRACKET expr RBRACKET .)
+    TIMES           reduce using rule 49 (variable -> ID LBRACKET expr RBRACKET .)
+    DIVIDE          reduce using rule 49 (variable -> ID LBRACKET expr RBRACKET .)
+    PLUS            reduce using rule 49 (variable -> ID LBRACKET expr RBRACKET .)
+    MINUS           reduce using rule 49 (variable -> ID LBRACKET expr RBRACKET .)
+    RELOP           reduce using rule 49 (variable -> ID LBRACKET expr RBRACKET .)
+    THEN            reduce using rule 49 (variable -> ID LBRACKET expr RBRACKET .)
+    OR              reduce using rule 49 (variable -> ID LBRACKET expr RBRACKET .)
+    AND             reduce using rule 49 (variable -> ID LBRACKET expr RBRACKET .)
+    DO              reduce using rule 49 (variable -> ID LBRACKET expr RBRACKET .)
+    END             reduce using rule 49 (variable -> ID LBRACKET expr RBRACKET .)
+    SEMI            reduce using rule 49 (variable -> ID LBRACKET expr RBRACKET .)
+    ELSE            reduce using rule 49 (variable -> ID LBRACKET expr RBRACKET .)
+    RPAREN          reduce using rule 49 (variable -> ID LBRACKET expr RBRACKET .)
+    RBRACKET        reduce using rule 49 (variable -> ID LBRACKET expr RBRACKET .)
+
+
+state 91
+
+    (4) decl_list -> decl_list identifier_list COLON type SEMI .
+
+    ID              reduce using rule 4 (decl_list -> decl_list identifier_list COLON type SEMI .)
+    BEGIN           reduce using rule 4 (decl_list -> decl_list identifier_list COLON type SEMI .)
+
+
+state 92
+
+    (12) array_type -> ARRAY LBRACKET dim . RBRACKET OF standard_type
+
+    RBRACKET        shift and go to state 95
+
+
+state 93
+
+    (13) dim -> INTNUM . DOTDOT INTNUM
+
+    DOTDOT          shift and go to state 96
+
+
+state 94
+
+    (20) if_statement -> IF expr THEN statement ELSE . statement
+    (14) statement -> . assignment
+    (15) statement -> . if_statement
+    (16) statement -> . while_statement
+    (17) statement -> . io_statement
+    (18) statement -> . compound_statement
+    (19) assignment -> . variable ASSIGN expr
+    (20) if_statement -> . IF expr THEN statement ELSE statement
+    (21) if_statement -> . IF expr THEN statement
+    (22) while_statement -> . WHILE expr DO statement
+    (23) io_statement -> . READ LPAREN variable RPAREN
+    (24) io_statement -> . WRITE LPAREN expr RPAREN
+    (25) io_statement -> . WRITE LPAREN STRINGCONST RPAREN
+    (26) compound_statement -> . BEGIN statement_list END
+    (48) variable -> . ID
+    (49) variable -> . ID LBRACKET expr RBRACKET
+
+    IF              shift and go to state 22
+    WHILE           shift and go to state 23
+    READ            shift and go to state 24
+    WRITE           shift and go to state 25
+    BEGIN           shift and go to state 9
+    ID              shift and go to state 26
+
+    statement                      shift and go to state 97
+    assignment                     shift and go to state 16
+    if_statement                   shift and go to state 17
+    while_statement                shift and go to state 18
+    io_statement                   shift and go to state 19
+    compound_statement             shift and go to state 20
+    variable                       shift and go to state 21
+
+state 95
+
+    (12) array_type -> ARRAY LBRACKET dim RBRACKET . OF standard_type
+
+    OF              shift and go to state 98
+
+
+state 96
+
+    (13) dim -> INTNUM DOTDOT . INTNUM
+
+    INTNUM          shift and go to state 99
+
+
+state 97
+
+    (20) if_statement -> IF expr THEN statement ELSE statement .
+
+    END             reduce using rule 20 (if_statement -> IF expr THEN statement ELSE statement .)
+    SEMI            reduce using rule 20 (if_statement -> IF expr THEN statement ELSE statement .)
+    ELSE            reduce using rule 20 (if_statement -> IF expr THEN statement ELSE statement .)
+
+
+state 98
+
+    (12) array_type -> ARRAY LBRACKET dim RBRACKET OF . standard_type
+    (10) standard_type -> . INTEGER
+    (11) standard_type -> . FLOAT
+
+    INTEGER         shift and go to state 52
+    FLOAT           shift and go to state 53
+
+    standard_type                  shift and go to state 100
+
+state 99
+
+    (13) dim -> INTNUM DOTDOT INTNUM .
+
+    RBRACKET        reduce using rule 13 (dim -> INTNUM DOTDOT INTNUM .)
+
+
+state 100
+
+    (12) array_type -> ARRAY LBRACKET dim RBRACKET OF standard_type .
+
+    SEMI            reduce using rule 12 (array_type -> ARRAY LBRACKET dim RBRACKET OF standard_type .)
+
+WARNING: 
+WARNING: Conflicts:
+WARNING: 
+WARNING: shift/reduce conflict for ELSE in state 80 resolved as shift

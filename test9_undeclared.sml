@@ -1,0 +1,5 @@
+PROGRAM Error1;
+VAR a : INTEGER;
+BEGIN
+    b := 3
+END.

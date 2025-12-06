@@ -1,0 +1,327 @@
+Script started on Fri Dec  5 21:04:12 2025
+[1m[7m%[27m[1m[0m                                                                                               [0m[27m[24m[Jsanjuvalavala@Sanjus-MacBook-Air lexer % [K[?2004h[7mpython3 lexer.py < test1_basic.sml[27m[34D[27mp[27my[27mt[27mh[27mo[27mn[27m3[27m [27ml[27me[27mx[27me[27mr[27m.[27mp[27my[27m [27m<[27m [27mt[27me[27ms[27mt[27m1[27m_[27mb[27ma[27ms[27mi[27mc[27m.[27ms[27mm[27ml[?2004l
+{"type": "token_list", "tokens": ["PROGRAM:PROGRAM", "ID:BasicTest", "SEMI:;", "VAR:VAR", "ID:a", "COMMA:,", "ID:b", "COLON::", "INTEGER:INTEGER", "SEMI:;", "BEGIN:BEGIN", "ID:a", "ASSIGN::=", "INTNUM:5", "SEMI:;", "ID:b", "ASSIGN::=", "ID:a", "PLUS:+", "INTNUM:10", "SEMI:;", "WRITE:WRITE", "LPAREN:(", "ID:b", "RPAREN:)", "END:END", "DOT:."]}
+[1m[7m%[27m[1m[0m                                                                                               [0m[27m[24m[Jsanjuvalavala@Sanjus-MacBook-Air lexer % [K[?2004h[7mpython3 lexer.py < test2_coercion.sml[27m[37D[27mp[27my[27mt[27mh[27mo[27mn[27m3[27m [27ml[27me[27mx[27me[27mr[27m.[27mp[27my[27m [27m<[27m [27mt[27me[27ms[27mt[27m2[27m_[27mc[27mo[27me[27mr[27mc[27mi[27mo[27mn[27m.[27ms[27mm[27ml[?2004l
+{"type": "token_list", "tokens": ["PROGRAM:PROGRAM", "ID:CoercionTest", "SEMI:;", "VAR:VAR", "ID:x", "COLON::", "INTEGER:INTEGER", "SEMI:;", "ID:y", "COLON::", "FLOAT:FLOAT", "SEMI:;", "BEGIN:BEGIN", "ID:x", "ASSIGN::=", "INTNUM:4", "SEMI:;", "ID:y", "ASSIGN::=", "ID:x", "PLUS:+", "FLOATNUM:3.5", "SEMI:;", "WRITE:WRITE", "LPAREN:(", "ID:y", "RPAREN:)", "END:END", "DOT:."]}
+[1m[7m%[27m[1m[0m                                                                                               [0m[27m[24m[Jsanjuvalavala@Sanjus-MacBook-Air lexer % [K[?2004h[7mpython3 lexer.py < test5_arrays.sml[27m[35D[27mp[27my[27mt[27mh[27mo[27mn[27m3[27m [27ml[27me[27mx[27me[27mr[27m.[27mp[27my[27m [27m<[27m [27mt[27me[27ms[27mt[27m5[27m_[27ma[27mr[27mr[27ma[27my[27ms[27m.[27ms[27mm[27ml[?2004l
+{"type": "token_list", "tokens": ["PROGRAM:PROGRAM", "ID:ArrayTest", "SEMI:;", "VAR:VAR", "ID:nums", "COLON::", "ARRAY:ARRAY", "LBRACKET:[", "INTNUM:1", "DOTDOT:..", "INTNUM:5", "RBRACKET:]", "OF:OF", "INTEGER:INTEGER", "SEMI:;", "BEGIN:BEGIN", "ID:nums", "LBRACKET:[", "INTNUM:1", "RBRACKET:]", "ASSIGN::=", "INTNUM:10", "SEMI:;", "ID:nums", "LBRACKET:[", "INTNUM:2", "RBRACKET:]", "ASSIGN::=", "ID:nums", "LBRACKET:[", "INTNUM:1", "RBRACKET:]", "PLUS:+", "INTNUM:5", "SEMI:;", "WRITE:WRITE", "LPAREN:(", "ID:nums", "LBRACKET:[", "INTNUM:2", "RBRACKET:]", "RPAREN:)", "END:END", "DOT:."]}
+[1m[7m%[27m[1m[0m                                                                                               [0m[27m[24m[Jsanjuvalavala@Sanjus-MacBook-Air lexer % [K[?2004h[7mpython3 parser.py test1_basic.sml[27m[33D[27mp[27my[27mt[27mh[27mo[27mn[27m3[27m [27mp[27ma[27mr[27ms[27me[27mr[27m.[27mp[27my[27m [27mt[27me[27ms[27mt[27m1[27m_[27mb[27ma[27ms[27mi[27mc[27m.[27ms[27mm[27ml[?2004l
+=== Symbol Table ===
+a : INTEGER
+b : INTEGER
+
+=== Level-order traversal of AST ===
+Program(BasicTest)
+
+
+VarDecl(a,b) # Compound
+
+
+StandardType(INTEGER) # Var(a) # Var(b) # Assign # Assign # Write
+
+
+Var(a) # IntConst(5) # Var(b) # BinOp(+) # Var(b)
+
+
+Var(a) # IntConst(10)
+
+
+[1m[7m%[27m[1m[0m                                                                                               [0m[27m[24m[Jsanjuvalavala@Sanjus-MacBook-Air lexer % [K[?2004hppython3 run_tests.py[?2004l
+=== SomeWMULife Test Runner ===
+
+============================================================
+Running test: input.sml
+============================================================
+✅ Program parsed successfully.
+=== Symbol Table ===
+x : INTEGER
+y : INTEGER
+a : ARRAY[1..10] OF FLOAT
+
+=== Level-order traversal of AST ===
+Program(Sample)
+
+
+VarDecl(x,y) # VarDecl(a) # Compound
+
+
+StandardType(INTEGER) # Var(x) # Var(y) # ArrayType(1..10) # Var(a) # Assign # Assign # If # While
+
+
+IntConst(1) # IntConst(10) # StandardType(FLOAT) # Var(x) # IntConst(1) # Var(y) # BinOp(+) # BinOp(<) # WriteStr # Write # BinOp(<) # Assign
+
+
+Var(x) # IntConst(2) # Var(x) # Var(y) # StringConst('ok') # IntConst(0) # Var(x) # Var(y) # Var(x) # BinOp(+)
+
+
+Var(x) # IntConst(1)
+============================================================
+Running test: test10_typemismatch.sml
+============================================================
+✅ Program parsed successfully.
+=== Symbol Table ===
+x : INTEGER
+
+=== Level-order traversal of AST ===
+Program(Error2)
+
+
+VarDecl(x) # Compound
+
+
+StandardType(INTEGER) # Var(x) # Assign
+
+
+Var(x) # FloatConst(3.14)
+============================================================
+Running test: test1_basic.sml
+============================================================
+✅ Program parsed successfully.
+=== Symbol Table ===
+a : INTEGER
+b : INTEGER
+
+=== Level-order traversal of AST ===
+Program(BasicTest)
+
+
+VarDecl(a,b) # Compound
+
+
+StandardType(INTEGER) # Var(a) # Var(b) # Assign # Assign # Write
+
+
+Var(a) # IntConst(5) # Var(b) # BinOp(+) # Var(b)
+
+
+Var(a) # IntConst(10)
+============================================================
+Running test: test2_coercion.sml
+============================================================
+✅ Program parsed successfully.
+=== Symbol Table ===
+x : INTEGER
+y : FLOAT
+
+=== Level-order traversal of AST ===
+Program(CoercionTest)
+
+
+VarDecl(x) # VarDecl(y) # Compound
+
+
+StandardType(INTEGER) # Var(x) # StandardType(FLOAT) # Var(y) # Assign # Assign # Write
+
+
+Var(x) # IntConst(4) # Var(y) # BinOp(+) # Var(y)
+
+
+Var(x) # FloatConst(3.5)
+============================================================
+Running test: test3_if.sml
+============================================================
+✅ Program parsed successfully.
+=== Symbol Table ===
+a : INTEGER
+b : INTEGER
+
+=== Level-order traversal of AST ===
+Program(IfTest)
+
+
+VarDecl(a,b) # Compound
+
+
+StandardType(INTEGER) # Var(a) # Var(b) # Assign # Assign # If
+
+
+Var(a) # IntConst(5) # Var(b) # IntConst(3) # BinOp(>) # WriteStr # WriteStr
+
+
+Var(a) # Var(b) # StringConst('greater') # StringConst('smaller')
+============================================================
+Running test: test4_while.sml
+============================================================
+✅ Program parsed successfully.
+=== Symbol Table ===
+i : INTEGER
+
+=== Level-order traversal of AST ===
+Program(WhileTest)
+
+
+VarDecl(i) # Compound
+
+
+StandardType(INTEGER) # Var(i) # Assign # While # Write
+
+
+Var(i) # IntConst(0) # BinOp(<) # Assign # Var(i)
+
+
+Var(i) # IntConst(5) # Var(i) # BinOp(+)
+
+
+Var(i) # IntConst(1)
+============================================================
+Running test: test5_arrays.sml
+============================================================
+✅ Program parsed successfully.
+=== Symbol Table ===
+nums : ARRAY[1..5] OF INTEGER
+
+=== Level-order traversal of AST ===
+Program(ArrayTest)
+
+
+VarDecl(nums) # Compound
+
+
+ArrayType(1..5) # Var(nums) # Assign # Assign # Write
+
+
+IntConst(1) # IntConst(5) # StandardType(INTEGER) # ArrayRef(nums) # IntConst(10) # ArrayRef(nums) # BinOp(+) # ArrayRef(nums)
+
+
+ArrayRef(nums) # IntConst(5)
+============================================================
+Running test: test6_logic.sml
+============================================================
+✅ Program parsed successfully.
+=== Symbol Table ===
+a : INTEGER
+b : INTEGER
+
+=== Level-order traversal of AST ===
+Program(LogicTest)
+
+
+VarDecl(a,b) # Compound
+
+
+StandardType(INTEGER) # Var(a) # Var(b) # Assign # Assign # If
+
+
+Var(a) # IntConst(2) # Var(b) # IntConst(5) # BinOp(AND) # WriteStr # WriteStr
+
+
+BinOp(<) # BinOp(>) # StringConst('ok') # StringConst('no')
+
+
+Var(a) # Var(b) # Var(b) # IntConst(3)
+============================================================
+Running test: test7_nested.sml
+============================================================
+❌ Program failed (expected for error tests):
+Illegal character ''' at line 10
+Syntax error at 'one' (type ID)
+Illegal character ''' at line 10
+Parsing failed.
+============================================================
+Running test: test8_string.sml
+============================================================
+✅ Program parsed successfully.
+=== Symbol Table ===
+
+
+=== Level-order traversal of AST ===
+Program(StringTest)
+
+
+Compound
+
+
+WriteStr
+
+
+StringConst('hello')
+============================================================
+Running test: test9_undeclared.sml
+============================================================
+❌ Program failed (expected for error tests):
+Type error: Undeclared identifier 'b'
+
+=== Level-order traversal of AST ===
+Program(Error1)
+
+
+VarDecl(a) # Compound
+
+
+StandardType(INTEGER) # Var(a) # Assign
+
+
+Var(b) # IntConst(3)
+============================================================
+Running test: test_arithmetic.sml
+============================================================
+✅ Program parsed successfully.
+=== Symbol Table ===
+a : INTEGER
+b : INTEGER
+c : INTEGER
+
+=== Level-order traversal of AST ===
+Program(Arithmetic)
+
+
+VarDecl(a,b,c) # Compound
+
+
+StandardType(INTEGER) # Var(a) # Var(b) # Var(c) # Assign # Assign # Assign
+
+
+Var(a) # IntConst(10) # Var(b) # IntConst(20) # Var(c) # BinOp(+)
+
+
+Var(a) # BinOp(*)
+
+
+Var(b) # IntConst(2)
+============================================================
+Running test: test_loop.sml
+============================================================
+✅ Program parsed successfully.
+=== Symbol Table ===
+i : INTEGER
+
+=== Level-order traversal of AST ===
+Program(LoopTest)
+
+
+VarDecl(i) # Compound
+
+
+StandardType(INTEGER) # Var(i) # Assign # While
+
+
+Var(i) # IntConst(1) # BinOp(<) # Assign
+
+
+Var(i) # IntConst(5) # Var(i) # BinOp(+)
+
+
+Var(i) # IntConst(1)
+============================================================
+Running test: test_simple.sml
+============================================================
+✅ Program parsed successfully.
+=== Symbol Table ===
+x : INTEGER
+
+=== Level-order traversal of AST ===
+Program(Simple)
+
+
+VarDecl(x) # Compound
+
+
+StandardType(INTEGER) # Var(x) # Assign
+
+
+Var(x) # IntConst(42)
+
+=== All tests completed ===
+[1m[7m%[27m[1m[0m                                                                                               [0m[27m[24m[Jsanjuvalavala@Sanjus-MacBook-Air lexer % [K[?2004heexit[?2004l
+
+Script done on Fri Dec  5 21:05:43 2025

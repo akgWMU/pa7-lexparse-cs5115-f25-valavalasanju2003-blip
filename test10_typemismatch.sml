@@ -1,0 +1,5 @@
+PROGRAM Error2;
+VAR x : INTEGER;
+BEGIN
+    x := 3.14
+END.
